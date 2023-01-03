@@ -1,5 +1,5 @@
 import { User } from "../models/user.js";
-import jwt from "jsonwebtoken";
+import { generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
   const { email, password } = req.body;
@@ -29,13 +29,23 @@ export const login = async (req, res) => {
       return res.status(403).json({ error: "Incorrect credentials" });
 
     //Generating token
-    const token = jwt.sign({ uid: user.id }, process.env.JWT_SECRET);
-    if (!token) return res.status(403).json({ error: "Error token generator" });
+    const { token, expireIn } = generateToken(user.id);
 
     //Finally response
-    return res.json({ token });
+    return res.json({ token, expireIn });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error });
+  }
+};
+
+export const infoUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.uid).lean();
+    if (!user) throw new Error("User not found");
+    return res.json({ email: user.email, uid: user.id });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
   }
 };
