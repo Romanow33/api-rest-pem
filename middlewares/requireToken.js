@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const requireToken = (req, res, next) => {
-  //verify Token
+  //verify Token gen a refresh token
   try {
     let token = req.headers?.authorization;
     if (!token) throw new Error("No bearer");
@@ -10,11 +10,13 @@ export const requireToken = (req, res, next) => {
     req.uid = uid;
     next();
   } catch (error) {
+    
     const TokenVerificationErrors = {
       "invalid signature": "Token signature wrong",
       "jwt expired": "JWT expired",
       "invalid token": "Invalid Token",
       "No bearer": "Token format invalid",
+      "jwt malformed": "JWT invalid format",
     };
 
     return res

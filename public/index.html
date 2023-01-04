@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1>Hola</h1>
+    //Only for example
     <form id="form">
       <input type="email" value="nacho@nacho.com" id="email" />
       <input type="password" value="123456" id="password" />
@@ -31,10 +32,8 @@
               email: email.value,
             }),
           });
-          console.log(res.ok, res.status);
           if (!res.ok) return;
           const data = await res.json();
-          console.log(data);
         } catch (error) {
           console.log(error);
         }
