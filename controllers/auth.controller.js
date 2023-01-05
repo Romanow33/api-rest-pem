@@ -1,5 +1,4 @@
 import { User } from "../models/user.js";
-
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
@@ -9,7 +8,10 @@ export const register = async (req, res) => {
     if (user) throw { code: 11000 };
     user = new User({ email, password });
     await user.save();
-    return res.status(201).json({ ok: "Register succesefull" });
+    //Generating token
+    const { token, expireIn } = generateToken(user.id);
+    generateRefreshToken(user.id, res);
+    return res.status(201).json({ token, expireIn });
   } catch (error) {
     if (error.code === 11000) {
       res.status(400).json({ error: "Ya existe este usuario" });

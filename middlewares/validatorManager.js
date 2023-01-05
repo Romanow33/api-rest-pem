@@ -20,3 +20,16 @@ export const bodyLoginValidator = [
     validationResultExpress,
   ],
 ];
+
+export const bodyEventValidator = [
+  [
+    body("title", "Must have title")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("must be at least 3 chars long")
+      .notEmpty(),
+    body("type", "Must have type").trim().notEmpty(),
+
+    validationResultExpress,
+  ],
+];
