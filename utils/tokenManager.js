@@ -29,3 +29,11 @@ export const generateRefreshToken = (uid, res) => {
   }
 };
 //its a short time token, save in cookies, only 15minutes of token life
+
+export const tokenVerificationErrors = {
+  "invalid signature": "Token signature wrong",
+  "jwt expired": "JWT expired",
+  "invalid token": "Invalid Token",
+  "No bearer": "Token format invalid",
+  "jwt malformed": "JWT invalid format",
+};

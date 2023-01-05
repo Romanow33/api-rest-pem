@@ -1,5 +1,5 @@
 import { User } from "../models/user.js";
-import jwt from "jsonwebtoken";
+
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
@@ -50,22 +50,10 @@ export const infoUser = async (req, res) => {
 
 export const refreshToken = (req, res) => {
   try {
-    const refreshTokeCookie = req.cookies.refreshToken;
-    if (!refreshTokeCookie) throw new Error("No token");
-    const { uid } = jwt.verify(refreshTokeCookie, process.env.JWT_REFRESH);
-    const { token, expireIn } = generateToken(uid);
+    const { token, expireIn } = generateToken(req.uid);
     return res.json({ token, expireIn });
   } catch (error) {
-    const TokenVerificationErrors = {
-      "invalid signature": "Token signature wrong",
-      "jwt expired": "JWT expired",
-      "invalid token": "Invalid Token",
-      "No bearer": "Token format invalid",
-      "jwt malformed": "JWT invalid format",
-    };
-    return res
-      .status(401)
-      .send({ error: TokenVerificationErrors[error.message] });
+    return res.status(500).json({ error: error.message });
   }
 };
 
