@@ -16,7 +16,6 @@ export const register = async (req, res) => {
     if (error.code === 11000) {
       res.status(400).json({ error: "Ya existe este usuario" });
     }
-    return res.status(500).json({ error: error });
   }
 };
 
@@ -31,8 +30,8 @@ export const login = async (req, res) => {
       return res.status(403).json({ error: "Incorrect credentials" });
 
     //Generating token
-    const { token, expireIn } = generateToken(user.id);
-    generateRefreshToken(user.id, res);
+    const { token, expireIn } = generateToken(user._id);
+    generateRefreshToken(user._id, res);
     //Finally response
     return res.json({ token, expireIn });
   } catch (error) {
@@ -44,7 +43,7 @@ export const infoUser = async (req, res) => {
   try {
     const user = await User.findById(req.uid).lean();
     if (!user) throw new Error("User not found");
-    return res.json({ email: user.email, uid: user.id });
+    return res.json({ email: user.email, uid: user._id });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -53,7 +52,7 @@ export const infoUser = async (req, res) => {
 export const refreshToken = (req, res) => {
   try {
     const { token, expireIn } = generateToken(req.uid);
-    return res.json({ token, expireIn });
+    return res.json({ token: token, expires: expireIn });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcryptjs";
 
 const eventSchema = new Schema(
   {
@@ -10,7 +9,10 @@ const eventSchema = new Schema(
     imagesSrcs: {
       type: Array,
     },
-    uploadAssets: {
+    slidesImages: {
+      type: Array,
+    },
+    eventSlides: {
       type: Array,
     },
     uid: { type: Schema.Types.ObjectId, require: true, ref: "User" },

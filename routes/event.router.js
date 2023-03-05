@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createEvent, getEvent, getEvents, removeEvent } from "../controllers/event.controller.js";
-import { requireToken } from "../middlewares/requireToken.js";
+import { createEvent, getEvent, getEvents, removeEvent, updateEvent, uploadImage, uploadSlide, uploadSlideImage } from "../controllers/event.controller.js";
+import { requireRefreshToken } from "../middlewares/requireRefreshToken.js";
 import { bodyEventValidator } from "../middlewares/validatorManager.js";
 
 const router = Router();
@@ -9,8 +9,12 @@ const router = Router();
 //GET   "/events/:id" get event by id
 //POST  "/events/"    create event by id
 //PATCH "/events/:id" edit event by id
-router.get("/", requireToken, getEvents);
-router.get("/:id", requireToken, getEvent);
-router.post("/", requireToken, bodyEventValidator, createEvent);
-router.delete("/:id", requireToken, removeEvent);
+router.get("/", requireRefreshToken, getEvents);
+router.get("/:id", requireRefreshToken, getEvent);
+router.post("/", requireRefreshToken, bodyEventValidator, createEvent);
+router.delete("/:id", requireRefreshToken, removeEvent);
+router.patch("/:id", requireRefreshToken, updateEvent);
+router.patch("/imageSrc/:id", requireRefreshToken, uploadImage);
+router.patch("/slideimages/:id", requireRefreshToken, uploadSlideImage);
+router.patch("/eventslide/:id", requireRefreshToken, uploadSlide);
 export default router;

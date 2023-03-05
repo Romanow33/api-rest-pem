@@ -1,0 +1,6 @@
+PEM-ADMIN
+PDnc8eSElOSA6cjF
+
+const uri = "mongodb+srv://<username>:<password>@cluster0.zcg5e.mongodb.net/?retryWrites=true&w=majority";
+
+3:52:13 video 
