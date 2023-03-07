@@ -6,6 +6,9 @@ import eventRouter from "./routes/event.router.js";
 import slideRouter from "./routes/slider.router.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
+
+
 const app = express();
 
 const whiteList = [process.env.ORIGIN1];

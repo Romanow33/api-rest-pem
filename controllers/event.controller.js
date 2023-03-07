@@ -72,8 +72,6 @@ export const removeEvent = async (req, res) => {
 export const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
-
-    console.log(req.body.title)
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).json({ error: "Invalid Id" });
 
@@ -98,7 +96,6 @@ export const updateEvent = async (req, res) => {
 export const uploadImage = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body.imagesSrcs)
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).json({ error: "Invalid Id" });
 
@@ -121,7 +118,6 @@ export const uploadImage = async (req, res) => {
 export const uploadSlideImage = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body.slidesImages)
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).json({ error: "Invalid Id" });
 
@@ -160,7 +156,6 @@ export const uploadSlide = async (req, res) => {
     return res.json({ event });
   } catch (error) {
     console.log(error)
-
     return res.status(500).json({ error: "Error del servidor" });
   }
 };
